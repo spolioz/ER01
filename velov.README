@@ -1,0 +1,5 @@
+Dans un répertoire, mets :
+- velov.py
+- un dossier velov avec tous les fichiers .json de l'archive de merde
+
+Dans le dossier velov, supprime tous les fichiers de moins de 90kB parce que c'est moisi
