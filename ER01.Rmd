@@ -1,0 +1,36 @@
+---
+title: "ER01"
+author: "Grégoire Beaudoire, Fabrice Lécuyer, Etienne Desbois"
+date: "1 décembre 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+
+```{r}
+library(ggplot2)
+velov = read.csv("data.csv")
+data = strptime(velov$Time, "%Y-%m-%dT%H:%M:%S")
+velov$Day = substr(data, 9,11)
+velov$Hour = strftime(data,'%H')
+```
+
+### Analysis of the evolution of the available bikes on the station next to the ENS
+
+```{r}
+ecole=subset(velov,Station=="velov-7046")
+ggplot(ecole,aes(x=Hour,y=Bikes,color=Day)) + geom_line()
+```
+
+```{r}
+ggplot(ecole,aes(x=Hour,y=Bikes,color=Day,group=1)) + geom_smooth()
+```
+
+```{r}
+emptystations=subset(velov,Bikes==0)
+ggplot()
