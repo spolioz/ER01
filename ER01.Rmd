@@ -20,7 +20,7 @@ velov$Hour = strftime(data, '%H')
 velov$Minutes = strftime(data, '%M')
 velov$Hour = as.numeric(velov$Hour)
 velov$Minutes = as.numeric(velov$Minutes)
-velov$Time2 <- velov$Hour + velov$Minutes/60
+velov$hour <- velov$Hour + velov$Minutes/60
 ```
 
 ### Overivew of velo'v data:
@@ -36,7 +36,7 @@ head(velov)
 ```{r}
 library(scales)
 ecole=subset(velov,Station=="velov-7046")
-ggplot(ecole,aes(x=Time2,y=Bikes,color=Day)) + geom_line()
+ggplot(ecole,aes(x=hour,y=Bikes,color=Day)) + geom_line()
 ```
 
 ```{r}
@@ -50,7 +50,7 @@ Let's plot the number of available bikes in all stations relative to the time, o
 
 ```{r}
 tuesdays = subset(velov,Day="29")
-ggplot(tuesdays,aes(x=Time2,y=Bikes)) + geom_smooth()
+ggplot(tuesdays,aes(x=hour,y=Bikes)) + geom_smooth()
 ```
 
 Now let's study the number of empty and full stations during the week:
@@ -59,8 +59,8 @@ Now let's study the number of empty and full stations during the week:
 ```{r}
 emptystations=subset(velov,(Bikes < 1 | Stands < 1))
 emptystations$cat <- (emptystations$Bikes < 1)
-full2 = aggregate(emptystations$Stands < 1, by=list(Time=emptystations$Time2), FUN=sum)
-empty2 = aggregate(emptystations$Bike < 1, by=list(Time=emptystations$Time2), FUN=sum)
+full2 = aggregate(emptystations$Stands < 1, by=list(Time=emptystations$hour), FUN=sum)
+empty2 = aggregate(emptystations$Bike < 1, by=list(Time=emptystations$hour), FUN=sum)
 ```
 
 The number of full stations, in average:
@@ -72,4 +72,7 @@ ggplot(full2, aes(x=Time, y=x/7)) + geom_line()
 And the one of empty stations, in average:
 ```{r}
 ggplot(empty2, aes(x=Time, y=x/7)) + geom_line()
+```
+
+```{r}
 ```
