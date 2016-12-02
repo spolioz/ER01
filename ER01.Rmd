@@ -45,10 +45,31 @@ ggplot(ecole,aes(x=Hour,y=Bikes,color=Day,group=1)) + geom_smooth()
 
 ### Global analysis
 
-Let's plot the number of available bikes in all stations relative to the time, on a week day:
+Let's plot the number of available bikes in all stations relative to the time, on a week day (so basically the number of bikes being in use at a given time):
 
 
 ```{r}
 tuesdays = subset(velov,Day="29")
 ggplot(tuesdays,aes(x=Time2,y=Bikes)) + geom_smooth()
+```
+
+Now let's study the number of empty and full stations during the week:
+
+
+```{r}
+emptystations=subset(velov,(Bikes < 1 | Stands < 1))
+emptystations$cat <- (emptystations$Bikes < 1)
+full2 = aggregate(emptystations$Stands < 1, by=list(Time=emptystations$Time2), FUN=sum)
+empty2 = aggregate(emptystations$Bike < 1, by=list(Time=emptystations$Time2), FUN=sum)
+```
+
+The number of full stations, in average:
+
+```{r}
+ggplot(full2, aes(x=Time, y=x/7)) + geom_line()
+```
+
+And the one of empty stations, in average:
+```{r}
+ggplot(empty2, aes(x=Time, y=x/7)) + geom_line()
 ```
