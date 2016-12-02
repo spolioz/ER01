@@ -74,5 +74,10 @@ And the one of empty stations, in average:
 ggplot(empty2, aes(x=Time, y=x/7)) + geom_line()
 ```
 
+For comparison, here's the number of total velo'v stations:
+
 ```{r}
+head(velov$Station)
 ```
+
+So at the worst time of the day more than 50 stations are empty out of 343 stations.
